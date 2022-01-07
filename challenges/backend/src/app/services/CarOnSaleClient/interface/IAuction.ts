@@ -3,10 +3,7 @@
  */
 export interface IAuction {
   id: number;
-  label: string;
-  endingTime: Date | null;
-  state: number;
+  numBids: number;
   minimumRequiredAsk: number;
   currentHighestBidValue: number;
-  numBids: number;
 }

@@ -8,6 +8,7 @@ import { IAuctionResponsePayload } from "../interface/IAuctionResponsePayload";
 import { ICarOnSaleClient } from "../interface/ICarOnSaleClient";
 import { DependencyIdentifier } from "../../../DependencyIdentifiers";
 import { ILogger } from "../../Logger/interface/ILogger";
+import { AuctionMapper } from "../../Helper/classes/AuctionMapper";
 
 /**
  * This service retrieve auction data from the CarOnSale API.
@@ -42,7 +43,7 @@ export class CarOnSaleClient implements ICarOnSaleClient {
       const payload: IAuctionResponsePayload = response.data;
       this.logger.log(`${feature} : retrieved [${payload.total}] items`);
       this.logger.log(`${feature} : ends`);
-      return payload.items;
+      return AuctionMapper.toAuctionArray(payload.items);
     } catch (error) {
       this.logger.log(`${feature} : failed with error: ${error}`);
       throw error;
