@@ -9,26 +9,23 @@ import { ICarOnSaleClient } from "../interface/ICarOnSaleClient";
 import { DependencyIdentifier } from "../../../DependencyIdentifiers";
 import { ILogger } from "../../Logger/interface/ILogger";
 import { AuctionMapper } from "../../Helper/classes/AuctionMapper";
+import { IConfigurationHelper } from "../../Helper/interface/IConfigurationHelper";
 
 /**
  * This service retrieve auction data from the CarOnSale API.
  */
 @injectable()
 export class CarOnSaleClient implements ICarOnSaleClient {
-  private carOnSaleApiUrl = process.env.API_URL as string;
-
-  private userId = process.env.USER_ID as string;
-
-  private password = process.env.USER_PASSWORD as string;
-
   public constructor(
     @inject(DependencyIdentifier.LOGGER)
-    private logger: ILogger
+    private logger: ILogger,
+    @inject(DependencyIdentifier.CONFIG)
+    private config: IConfigurationHelper
   ) {}
 
   public async getRunningAuctions(): Promise<IAuction[]> {
     const feature: string = "CarOnSaleClient : getting running auctions";
-    const url = `${this.carOnSaleApiUrl}/api/v2/auction/buyer/`;
+    const url = `${this.config.API_URL}/api/v2/auction/buyer/`;
     this.logger.log(`${feature} : starts`);
 
     const token: string = await this.authenticate();
@@ -36,7 +33,7 @@ export class CarOnSaleClient implements ICarOnSaleClient {
       const reqOptions = {
         headers: {
           authtoken: token,
-          userid: this.userId,
+          userid: this.config.USER_ID,
         },
       };
       const response: any = await axios.get(url, reqOptions);
@@ -52,12 +49,12 @@ export class CarOnSaleClient implements ICarOnSaleClient {
 
   private async authenticate(): Promise<string> {
     const feature: string = "CarOnSaleClient : authentication";
-    const url: string = `${this.carOnSaleApiUrl}/api/v1/authentication/${this.userId}`;
+    const url: string = `${this.config.API_URL}/api/v1/authentication/${this.config.USER_ID}`;
     this.logger.log(`${feature} : starts`);
 
     try {
       const authRequest: IAuthenticationRequestPayload = {
-        password: this.password,
+        password: this.config.USER_PASSWORD,
         meta: "string",
       };
       const response: any = await axios.put(url, authRequest);

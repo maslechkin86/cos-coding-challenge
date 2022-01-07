@@ -8,6 +8,8 @@ import { CarOnSaleClient } from "./services/CarOnSaleClient/classes/CarOnSaleCli
 import { ICarOnSaleClient } from "./services/CarOnSaleClient/interface/ICarOnSaleClient";
 import { IAuctionProcessor } from "./services/Helper/interface/IAuctionProcessor";
 import { AuctionProcessor } from "./services/Helper/classes/AuctionProcessor";
+import { ConfigurationHelper } from "./services/Helper/classes/ConfigurationHelper";
+import { IConfigurationHelper } from "./services/Helper/interface/IConfigurationHelper";
 
 /*
  * Initialize the environment variables.
@@ -31,6 +33,9 @@ container
 container
   .bind<IAuctionProcessor>(DependencyIdentifier.AUCTION_PROCESSOR)
   .to(AuctionProcessor);
+container
+  .bind<IConfigurationHelper>(DependencyIdentifier.CONFIG)
+  .to(ConfigurationHelper);
 
 /*
  * Inject all dependencies in the application & retrieve application instance.

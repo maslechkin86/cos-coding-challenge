@@ -1,6 +1,9 @@
 import { IAuctionResponsePayloadItem } from "../../CarOnSaleClient/interface/IAuctionResponsePayloadItem";
 import { IAuction } from "../../CarOnSaleClient/interface/IAuction";
 
+/**
+ * Represent a class mapper of <IAuctionResponsePayloadItem> to <IAuction>.
+ */
 export class AuctionMapper {
   public static toAuctionArray(
     items: IAuctionResponsePayloadItem[]

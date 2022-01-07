@@ -2,6 +2,11 @@ import { injectable } from "inversify";
 import { IAuction } from "../../CarOnSaleClient/interface/IAuction";
 import { IAuctionProcessor } from "../interface/IAuctionProcessor";
 
+/**
+ * Represent a class that calculate auction statistic:
+ * - the average number of bids on an auction
+ * - the average percentage of the auction progress.
+ */
 @injectable()
 export class AuctionProcessor implements IAuctionProcessor {
   public getAverageNumberOfBids(auctions: IAuction[]): number {
