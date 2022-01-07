@@ -4,10 +4,10 @@ import { IAuction } from "../interface/IAuction";
 import { ICarOnSaleClient } from "../interface/ICarOnSaleClient";
 
 /**
- * Represent a stab for CarOnSale API client.
+ * Represent a stub for CarOnSale API client.
  */
 @injectable()
-export class CarOnSaleClientStab implements ICarOnSaleClient {
+export class CarOnSaleClientStub implements ICarOnSaleClient {
   private list: IAuction[] = [
     {
       id: 17618,

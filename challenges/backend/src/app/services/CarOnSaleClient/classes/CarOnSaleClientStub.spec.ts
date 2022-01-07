@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { IAuction } from "../interface/IAuction";
 import { ICarOnSaleClient } from "../interface/ICarOnSaleClient";
-import { CarOnSaleClientStab } from "./CarOnSaleClientStab";
+import { CarOnSaleClientStub } from "./CarOnSaleClientStub";
 
 describe("CarOnSaleClient", function () {
   let client: ICarOnSaleClient;
@@ -9,7 +9,7 @@ describe("CarOnSaleClient", function () {
   describe("getRunningAuctions function", function () {
     it("should return array of auctions", async function () {
       // Arrange
-      client = new CarOnSaleClientStab();
+      client = new CarOnSaleClientStub();
 
       // Act
       const result: IAuction[] = await client.getRunningAuctions();

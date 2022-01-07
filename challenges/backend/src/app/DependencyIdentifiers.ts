@@ -3,4 +3,5 @@ export const DependencyIdentifier = {
   CAR_ON_SALE_CLIENT: "car_on_sale_client",
   AUCTION_PROCESSOR: "auction_processor",
   CONFIG: "config",
+  REQUEST_CLIENT: "request_client",
 };

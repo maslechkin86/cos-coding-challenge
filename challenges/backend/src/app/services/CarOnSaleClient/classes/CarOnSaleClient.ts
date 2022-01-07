@@ -1,5 +1,4 @@
 import "reflect-metadata";
-import axios from "axios";
 import { inject, injectable } from "inversify";
 import { IAuction } from "../interface/IAuction";
 import { IAuthenticationRequestPayload } from "../interface/IAuthenticationRequestPayload";
@@ -10,6 +9,7 @@ import { DependencyIdentifier } from "../../../DependencyIdentifiers";
 import { ILogger } from "../../Logger/interface/ILogger";
 import { AuctionMapper } from "../../Helper/classes/AuctionMapper";
 import { IConfigurationHelper } from "../../Helper/interface/IConfigurationHelper";
+import { IRequestClient } from "../../RequestClient/interfaces/IRequestClient";
 
 /**
  * This service retrieve auction data from the CarOnSale API.
@@ -20,7 +20,9 @@ export class CarOnSaleClient implements ICarOnSaleClient {
     @inject(DependencyIdentifier.LOGGER)
     private logger: ILogger,
     @inject(DependencyIdentifier.CONFIG)
-    private config: IConfigurationHelper
+    private config: IConfigurationHelper,
+    @inject(DependencyIdentifier.REQUEST_CLIENT)
+    private client: IRequestClient
   ) {}
 
   public async getRunningAuctions(): Promise<IAuction[]> {
@@ -36,7 +38,7 @@ export class CarOnSaleClient implements ICarOnSaleClient {
           userid: this.config.USER_ID,
         },
       };
-      const response: any = await axios.get(url, reqOptions);
+      const response: any = await this.client.get(url, reqOptions);
       const payload: IAuctionResponsePayload = response.data;
       this.logger.log(`${feature} : retrieved [${payload.total}] items`);
       this.logger.log(`${feature} : ends`);
@@ -57,7 +59,7 @@ export class CarOnSaleClient implements ICarOnSaleClient {
         password: this.config.USER_PASSWORD,
         meta: "string",
       };
-      const response: any = await axios.put(url, authRequest);
+      const response: any = await this.client.put(url, authRequest);
       const payload: IAuthenticationResponsePayload = response.data;
       this.logger.log(`${feature} : ends`);
       return payload.token;

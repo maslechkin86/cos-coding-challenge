@@ -41,7 +41,7 @@ export class ConfigurationHelper implements IConfigurationHelper {
           ", "
         )}`
       );
-      process.exit(1);
+      process.exit(-1);
     }
     this.logger.log(`${feature} : environment variables are valid`);
   }

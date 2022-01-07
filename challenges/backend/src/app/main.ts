@@ -10,11 +10,17 @@ import { IAuctionProcessor } from "./services/Helper/interface/IAuctionProcessor
 import { AuctionProcessor } from "./services/Helper/classes/AuctionProcessor";
 import { ConfigurationHelper } from "./services/Helper/classes/ConfigurationHelper";
 import { IConfigurationHelper } from "./services/Helper/interface/IConfigurationHelper";
+import { RequestClient } from "./services/RequestClient/classes/RequestClient";
+import { IRequestClient } from "./services/RequestClient/interfaces/IRequestClient";
 
 /*
  * Initialize the environment variables.
  */
 dotenv.config();
+
+process.on("uncaughtException", () => {
+  process.exit(-1);
+});
 
 /*
  * Create the DI container.
@@ -36,6 +42,9 @@ container
 container
   .bind<IConfigurationHelper>(DependencyIdentifier.CONFIG)
   .to(ConfigurationHelper);
+container
+  .bind<IRequestClient>(DependencyIdentifier.REQUEST_CLIENT)
+  .to(RequestClient);
 
 /*
  * Inject all dependencies in the application & retrieve application instance.
